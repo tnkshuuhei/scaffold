@@ -1,4 +1,5 @@
 "use client";
+import "@rainbow-me/rainbowkit/styles.css";
 import * as React from "react";
 import {
   RainbowKitProvider,
@@ -6,11 +7,10 @@ import {
   connectorsForWallets,
 } from "@rainbow-me/rainbowkit";
 import {
-  injectedWallet,
-  rainbowWallet,
-  metaMaskWallet,
   rabbyWallet,
-  coinbaseWallet,
+  ledgerWallet,
+  safeWallet,
+  tahoWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import {
@@ -19,16 +19,18 @@ import {
   optimism,
   arbitrum,
   zora,
-  goerli,
+  optimismGoerli,
+  sepolia,
+  base,
 } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet, polygon, optimism, arbitrum, zora],
+  [mainnet, polygon, optimism, base, zora, sepolia, optimismGoerli],
   [publicProvider()]
 );
 const appName: string = "RainbowKit scaffolding";
 const AppInfo = { appName: appName, appURL: "" };
-const projectId: string = process.env.PROJECT_ID || "";
+const projectId: string = "1566a0356dfc3960638ac92753ed3c43";
 const { wallets } = getDefaultWallets({
   appName: appName,
   projectId,
@@ -40,11 +42,10 @@ const connectors = connectorsForWallets([
   {
     groupName: "Other",
     wallets: [
-      injectedWallet({ chains }),
-      rainbowWallet({ chains, projectId }),
-      metaMaskWallet({ chains, projectId }),
       rabbyWallet({ chains }),
-      coinbaseWallet({ chains, appName }),
+      ledgerWallet({ chains, projectId }),
+      safeWallet({ chains }),
+      tahoWallet({ chains }),
     ],
   },
 ]);
