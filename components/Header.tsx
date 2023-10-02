@@ -3,6 +3,7 @@ import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import Link from "next/link";
+import { ModeToggle } from "./ui/toggle-mode";
 
 const Header = () => {
   return (
@@ -10,13 +11,6 @@ const Header = () => {
       <nav className=" border-gray-200 px-4 lg:px-6 py-5 dark:bg-gray-800">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link href="/" className="flex items-center">
-            {/* <Image
-              src={}
-              className="mr-3 h-6 sm:h-9"
-              alt="Logo"
-              width={40}
-              height={40}
-            /> */}
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
@@ -25,16 +19,7 @@ const Header = () => {
               height={24}
               priority
             />
-            {/* <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              add name
-            </span> */}
           </Link>
-          <div className="flex items-center lg:order-2">
-            <ConnectButton
-              showBalance={false}
-              accountStatus={{ smallScreen: "address", largeScreen: "full" }}
-            />
-          </div>
           <div
             className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
             id="mobile-menu-2"
@@ -68,6 +53,13 @@ const Header = () => {
                 </a>
               </li>
             </ul>
+          </div>
+          <div className="flex items-center lg:order-2 gap-4">
+            <ConnectButton
+              showBalance={false}
+              accountStatus={{ smallScreen: "address", largeScreen: "full" }}
+            />
+            <ModeToggle />
           </div>
         </div>
       </nav>
