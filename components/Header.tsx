@@ -4,8 +4,12 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import Link from "next/link";
 import { ModeToggle } from "./ui/toggle-mode";
+import { Button } from "./ui/button";
+import { useSafeAA } from "@/hooks/AccountAbstractionContext";
 
 const Header = () => {
+  const { loginWeb3Auth, logoutWeb3Auth, ownerAddress } = useSafeAA();
+  // 0xa6Fd859Eff69aE7EB5EfcC7e2576f39fed87B1b4
   return (
     <div>
       <nav className=" border-gray-200 px-4 lg:px-6 py-5 dark:bg-gray-800">
@@ -55,10 +59,15 @@ const Header = () => {
             </ul>
           </div>
           <div className="flex items-center lg:order-2 gap-4">
-            <ConnectButton
+            {/* <ConnectButton
               showBalance={false}
               accountStatus={{ smallScreen: "address", largeScreen: "full" }}
-            />
+            /> */}
+            {ownerAddress ? (
+              <Button onClick={logoutWeb3Auth}>Disconnect</Button>
+            ) : (
+              <Button onClick={loginWeb3Auth}>Connect</Button>
+            )}
             <ModeToggle />
           </div>
         </div>

@@ -1,8 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Providers } from "./providers";
+import { RainbowProviders } from "./providers";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AccountAbstractionProvider } from "@/hooks/AccountAbstractionContext";
 import Header from "../components/Header";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -18,12 +19,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <ThemeProvider attribute="class" defaultTheme="system">
-            <Header />
-            {children}
-          </ThemeProvider>
-        </Providers>
+        <AccountAbstractionProvider>
+          <RainbowProviders>
+            <ThemeProvider attribute="class" defaultTheme="system">
+              <Header />
+              {children}
+            </ThemeProvider>
+          </RainbowProviders>
+        </AccountAbstractionProvider>
       </body>
     </html>
   );
