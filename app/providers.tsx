@@ -9,28 +9,41 @@ import {
 import {
   rabbyWallet,
   ledgerWallet,
-  safeWallet,
   tahoWallet,
+  zerionWallet,
+  uniswapWallet,
 } from "@rainbow-me/rainbowkit/wallets";
+
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import {
   mainnet,
   polygon,
   optimism,
-  arbitrum,
   zora,
-  optimismGoerli,
+  polygonZkEvm,
   sepolia,
+  optimismGoerli,
   base,
+  polygonZkEvmTestnet,
 } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet, polygon, optimism, base, zora, sepolia, optimismGoerli],
+  [
+    mainnet,
+    polygon,
+    optimism,
+    base,
+    zora,
+    polygonZkEvm,
+    sepolia,
+    optimismGoerli,
+    polygonZkEvmTestnet,
+  ],
   [publicProvider()]
 );
 const appName: string = "RainbowKit scaffolding";
 const AppInfo = { appName: appName, appURL: "" };
-const projectId: string = "1566a0356dfc3960638ac92753ed3c43";
+const projectId: string = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 const { wallets } = getDefaultWallets({
   appName: appName,
   projectId,
@@ -44,8 +57,9 @@ const connectors = connectorsForWallets([
     wallets: [
       rabbyWallet({ chains }),
       ledgerWallet({ chains, projectId }),
-      safeWallet({ chains }),
       tahoWallet({ chains }),
+      zerionWallet({ chains, projectId }),
+      uniswapWallet({ chains, projectId }),
     ],
   },
 ]);
