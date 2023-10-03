@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { RainbowProviders } from "./providers";
+import { RainbowProviders } from "./rainbowproviders";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AccountAbstractionProvider } from "@/hooks/AccountAbstractionContext";
 import Header from "../components/Header";
