@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { showSuccessToast } from "@/hooks/notification";
+import { showSuccessToast } from "@/hooks/useNotification";
 
 export default function Home() {
   function handleClick() {
