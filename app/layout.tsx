@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Providers } from "./providers";
+import { RainbowProviders } from "./rainbowproviders";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "../components/Header";
 import { ToastContainer } from "react-toastify";
@@ -21,12 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
+        <RainbowProviders>
           <ThemeProvider attribute="class" defaultTheme="system">
             <Header />
             {children}
           </ThemeProvider>
-        </Providers>
+        </RainbowProviders>
         <ToastContainer newestOnTop />
       </body>
     </html>

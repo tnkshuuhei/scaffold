@@ -70,7 +70,7 @@ const wagmiConfig = createConfig({
   publicClient,
   webSocketPublicClient,
 });
-export function Providers({ children }: { children: React.ReactNode }) {
+export function RainbowProviders({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
   return (
