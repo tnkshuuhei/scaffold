@@ -6,21 +6,16 @@ import {
   useEffect,
   useState,
 } from "react";
-import { CHAIN_NAMESPACES, WALLET_ADAPTERS } from "@web3auth/base";
-import { Web3Auth, Web3AuthOptions } from "@web3auth/modal";
-import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
-import AccountAbstraction from "@safe-global/account-abstraction-kit-poc";
-import { Web3AuthModalPack } from "@safe-global/auth-kit";
-import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
-import {
-  MetaTransactionData,
-  MetaTransactionOptions,
-} from "@safe-global/safe-core-sdk-types";
 import { ethers } from "ethers";
+import { CHAIN_NAMESPACES, WALLET_ADAPTERS } from "@web3auth/base";
+import { Web3AuthOptions } from "@web3auth/modal";
+import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
+import { Web3AuthModalPack } from "@safe-global/auth-kit";
 import getChain from "../lib/Chains/getchains";
-const AccountAbstractionContext = createContext<any>(null);
+
 const clientId: string = (process.env.NEXT_PUBLIC_CLIENT_ID as string) || "";
 
+const AccountAbstractionContext = createContext<any>(null);
 export const AccountAbstractionProvider = ({
   children,
 }: {
@@ -28,13 +23,15 @@ export const AccountAbstractionProvider = ({
 }) => {
   const [address, setAddress] = useState<string | null>(null);
   const [web3AuthModalPack, setWeb3AuthModalPack] = useState<any>(null);
+
+  // initial chain: goerli
   const chain = getChain("0x5");
-  // owner address
-  const [ownerAddress, setOwnerAddress] = useState<string>("");
   // safes owned by the user
+
   const [safes, setSafes] = useState<string[]>([]);
   const [chainId, setChainId] = useState<any>("");
-  const [web3Provider, setWeb3Provider] = useState<any>(null);
+  const [web3Provider, setWeb3Provider] = useState<ethers.BrowserProvider>();
+  const [signer, setSigner] = useState<any>(undefined);
 
   useEffect(() => {
     const init = async () => {
@@ -98,19 +95,23 @@ export const AccountAbstractionProvider = ({
 
     try {
       const { safe, eoa } = await web3AuthModalPack.signIn();
-      const provider = web3AuthModalPack.getProvider(); //as ethers.providers.ExternalProvider;
+      const provider = new ethers.BrowserProvider(
+        web3AuthModalPack.getProvider()
+      );
+      const signer = provider.getSigner();
       // we set react state with the provided values: owner (eoa address), chain, safes owned & web3 provider
-      // setChainId(chain.id);
-      setOwnerAddress(eoa);
-      setSafes(safes || []);
+      setChainId(chain?.id);
+      setAddress(eoa);
+      setSafes(safe || []);
       setWeb3Provider(provider);
+      setSigner(signer);
       console.log("provider: ", provider);
       console.log("safes: ", safes);
       console.log("eoa: ", eoa);
     } catch (error) {
       console.log("error: ", error);
     }
-  }, [safes, web3AuthModalPack]);
+  }, [chain?.id, safes, web3AuthModalPack]);
 
   useEffect(() => {
     if (web3AuthModalPack && web3AuthModalPack.getProvider()) {
@@ -121,18 +122,23 @@ export const AccountAbstractionProvider = ({
   }, [web3AuthModalPack, loginWeb3Auth]);
   const logoutWeb3Auth = () => {
     web3AuthModalPack?.signOut();
-    setOwnerAddress("");
+    setAddress("");
     setSafes([]);
-    // setChainId(chain.id);
+    setChainId(chain?.id);
     setWeb3Provider(undefined);
-    // setSafeSelected("");
-    // setGelatoTaskId(undefined);
-    // closeMoneriumFlow();
+    setSigner(undefined);
   };
 
   return (
     <AccountAbstractionContext.Provider
-      value={{ ownerAddress, loginWeb3Auth, logoutWeb3Auth }}
+      value={{
+        address,
+        web3Provider,
+        signer,
+        chainId,
+        loginWeb3Auth,
+        logoutWeb3Auth,
+      }}
     >
       {children}
     </AccountAbstractionContext.Provider>
