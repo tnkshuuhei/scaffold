@@ -1,5 +1,5 @@
 "use client";
-import {
+import React, {
   createContext,
   useCallback,
   useContext,
@@ -27,9 +27,10 @@ export const AccountAbstractionProvider = ({
   // initial chain: goerli
   const chain = getChain("0x5");
   // safes owned by the user
-
   const [safes, setSafes] = useState<string[]>([]);
+  // chainId should be selected by the user
   const [chainId, setChainId] = useState<any>("");
+
   const [web3Provider, setWeb3Provider] = useState<ethers.BrowserProvider>();
   const [signer, setSigner] = useState<any>(undefined);
 
