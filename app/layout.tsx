@@ -5,6 +5,9 @@ import { RainbowProviders } from "./rainbowproviders";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AccountAbstractionProvider } from "@/hooks/AccountAbstractionContext";
 import Header from "../components/Header";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,6 +29,7 @@ export default function RootLayout({
               {children}
             </ThemeProvider>
           </RainbowProviders>
+          <ToastContainer newestOnTop />
         </AccountAbstractionProvider>
       </body>
     </html>
