@@ -8,7 +8,6 @@ import {
 } from "@rainbow-me/rainbowkit";
 import {
   rabbyWallet,
-  ledgerWallet,
   tahoWallet,
   zerionWallet,
   uniswapWallet,
@@ -56,7 +55,6 @@ const connectors = connectorsForWallets([
     groupName: "Other",
     wallets: [
       rabbyWallet({ chains }),
-      ledgerWallet({ chains, projectId }),
       tahoWallet({ chains }),
       zerionWallet({ chains, projectId }),
       uniswapWallet({ chains, projectId }),
