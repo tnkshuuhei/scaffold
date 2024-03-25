@@ -54,10 +54,7 @@ const Header = () => {
             </ul>
           </div>
           <div className="flex items-center lg:order-2 gap-4">
-            <ConnectButton
-              showBalance={false}
-              accountStatus={{ smallScreen: "address", largeScreen: "full" }}
-            />
+            <ConnectButton />
             <ModeToggle />
           </div>
         </div>
