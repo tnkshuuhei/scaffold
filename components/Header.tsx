@@ -3,7 +3,6 @@ import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import Link from "next/link";
-import { ModeToggle } from "./ui/toggle-mode";
 
 const Header = () => {
   return (
@@ -55,7 +54,6 @@ const Header = () => {
           </div>
           <div className="flex items-center lg:order-2 gap-4">
             <ConnectButton />
-            <ModeToggle />
           </div>
         </div>
       </nav>
