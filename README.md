@@ -1,6 +1,6 @@
 # To Get Started
 
-## Frontend
+## Frontend with Particle, RainbowKit and wagmi
 
 ### setup frontend
 
