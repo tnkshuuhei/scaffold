@@ -1,12 +1,14 @@
 "use client";
 import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import React from "react";
+
+import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider, http } from "wagmi";
 import { optimismSepolia } from "wagmi/chains";
-import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
-import React from "react";
+
 import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/toaster";
 
