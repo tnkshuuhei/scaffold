@@ -1,30 +1,16 @@
-"use client";
-import "./globals.css";
-import "@rainbow-me/rainbowkit/styles.css";
 import React from "react";
-
-import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { WagmiProvider, http } from "wagmi";
-import { optimismSepolia } from "wagmi/chains";
-
 
 import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/toaster";
 
-const config = getDefaultConfig({
-  appName: "Scaffold",
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
-  chains: [optimismSepolia],
-  transports: {
-    [optimismSepolia.id]: http(
-      `https://optimism-sepolia.infura.io/v3/${process.env
-        .NEXT_PUBLIC_INFURA_API_KEY!}`
-    ),
-  },
-  ssr: true,
-});
-const client = new QueryClient();
+import type { Metadata } from "next";
+
+import ContextProvider from "@/context";
+
+export const metadata: Metadata = {
+  title: process.env.NEXT_PUBLIC_APP_NAME!,
+  description: "public template to build dapps asap",
+};
 
 export default function RootLayout({
   children,
@@ -34,15 +20,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <WagmiProvider config={config} reconnectOnMount={true}>
-          <QueryClientProvider client={client}>
-            <RainbowKitProvider>
-              <Header />
-              <Toaster />
-              {children}
-            </RainbowKitProvider>
-          </QueryClientProvider>
-        </WagmiProvider>
+        <ContextProvider>
+          <Header />
+          <Toaster />
+          {children}
+          {/* <footer className="flex gap-6 flex-wrap items-center justify-center p-4 bg-[#F4EFEA]">
+            <a
+              className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+              href="https://github.com/tnkshuuhei"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Scaffold built by shutanaka.eth
+            </a>
+          </footer> */}
+        </ContextProvider>
       </body>
     </html>
   );
