@@ -1,7 +1,6 @@
 import React from "react";
 
 import Header from "@/components/Header";
-import { Toaster } from "@/components/ui/toaster";
 
 import type { Metadata } from "next";
 
@@ -22,7 +21,6 @@ export default function RootLayout({
       <body>
         <ContextProvider>
           <Header />
-          <Toaster />
           {children}
           {/* <footer className="flex gap-6 flex-wrap items-center justify-center p-4 bg-[#F4EFEA]">
             <a
